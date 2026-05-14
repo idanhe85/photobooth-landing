@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     localPatterns: [
       { pathname: '/gallery/**' },
       { pathname: '/*.png' },
+      { pathname: '/*.jpg' },
+      { pathname: '/*.jpeg' },
     ],
   },
 }

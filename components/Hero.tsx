@@ -139,13 +139,15 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
                 }}
               >
                 {/* Hero photo */}
-                <Image
-                  src="/IMG_3989.jpg"
-                  alt="The PhotoDUDE booth in action"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
+                <div className="absolute inset-0">
+                  <Image
+                    src="/IMG_3989.jpg"
+                    alt="The PhotoDUDE booth in action"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                </div>
                 {/* Dark overlay — fades out as panel expands */}
                 <motion.div
                   className="absolute inset-0"
