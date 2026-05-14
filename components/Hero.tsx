@@ -20,36 +20,12 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const check = () => {
-      const mobile = window.innerWidth < 768
-      setIsMobile(mobile)
-    }
+    const check = () => setIsMobile(window.innerWidth < 768)
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  // On mobile: auto-play the expansion animation instead of scroll-driven
-  useEffect(() => {
-    if (!isMobile) return
-    const duration = 1600 // ms
-    const start = performance.now()
-    let raf: number
-    const animate = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1)
-      // ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setScrollProgress(eased)
-      if (progress < 1) {
-        raf = requestAnimationFrame(animate)
-      } else {
-        setFullyExpanded(true)
-        setShowContent(true)
-      }
-    }
-    raf = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(raf)
-  }, [isMobile])
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
@@ -66,10 +42,9 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
       }
     }
 
-    const onTouchStart = (e: TouchEvent) => { if (isMobile) return; setTouchStartY(e.touches[0].clientY) }
+    const onTouchStart = (e: TouchEvent) => { setTouchStartY(e.touches[0].clientY) }
 
     const onTouchMove = (e: TouchEvent) => {
-      if (isMobile) return
       if (!touchStartY) return
       const delta = touchStartY - e.touches[0].clientY
       if (fullyExpanded && delta < -20 && window.scrollY <= 5) {
