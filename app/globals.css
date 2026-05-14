@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: #000033;
+  --color-navy-light: #000044;
+  --color-gold: #CC9933;
+  --color-gold-light: #DDB84D;
+  --color-gold-dark: #A67A1F;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000033;
+  color: #ffffff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
+
+/* Display / hero headings — Helvetica Neue Black (900) */
+h1, .font-black {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+/* Section headings — Helvetica Neue Bold (700) */
+h2, h3, .font-extrabold, .font-bold {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* UI labels, badges, nav — Helvetica Neue Medium (500) */
+.font-semibold, .font-medium {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0em;
+}
+
+/* Tracking overrides — uppercase labels keep their own tracking */
+.tracking-\[0\.3em\], .tracking-widest {
+  letter-spacing: 0.3em;
+}
+
+::selection {
+  background-color: rgba(201, 168, 76, 0.3);
+  color: white;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0B1D35; }
+::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(201,168,76,0.5); }
