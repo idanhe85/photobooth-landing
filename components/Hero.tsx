@@ -23,16 +23,33 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
     const check = () => {
       const mobile = window.innerWidth < 768
       setIsMobile(mobile)
-      if (mobile) {
-        setScrollProgress(1)
-        setShowContent(true)
-        setFullyExpanded(true)
-      }
     }
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
+
+  // On mobile: auto-play the expansion animation instead of scroll-driven
+  useEffect(() => {
+    if (!isMobile) return
+    const duration = 1600 // ms
+    const start = performance.now()
+    let raf: number
+    const animate = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1)
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setScrollProgress(eased)
+      if (progress < 1) {
+        raf = requestAnimationFrame(animate)
+      } else {
+        setFullyExpanded(true)
+        setShowContent(true)
+      }
+    }
+    raf = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(raf)
+  }, [isMobile])
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
@@ -87,7 +104,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
 
   const w          = 300 + scrollProgress * (isMobile ? 650 : 1250)
   const h          = 400 + scrollProgress * (isMobile ? 200 : 400)
-  const slideX     = isMobile ? 0 : scrollProgress * 150
+  const slideX     = scrollProgress * (isMobile ? 120 : 150)
   const firstWord  = title.split(' ')[0]
   const restWords  = title.split(' ').slice(1).join(' ')
 
@@ -166,7 +183,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
                 {/* Logo centred inside panel */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    animate={{ opacity: isMobile ? 1 : 1 - scrollProgress * 2 }}
+                    animate={{ opacity: 1 - scrollProgress * 2 }}
                     className="relative z-10"
                   >
                     <Image
@@ -184,28 +201,14 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
               {/* Split title — words slide apart on scroll */}
               <div className="flex items-center justify-center gap-4 w-full relative z-20 flex-col pointer-events-none">
                 <motion.p
-                  key={`first-${isMobile}`}
                   className="text-4xl md:text-6xl font-black text-white/90 transition-none"
-                  initial={isMobile ? { opacity: 0, y: 28 } : false}
-                  animate={isMobile ? { opacity: 1, y: 0 } : undefined}
-                  transition={isMobile ? { duration: 0.6, delay: 0.2 } : undefined}
-                  style={{
-                    transform: isMobile ? undefined : `translateX(-${slideX}vw)`,
-                    textShadow: '0 2px 16px rgba(0,0,0,0.7)',
-                  }}
+                  style={{ transform: `translateX(-${slideX}vw)`, textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
                 >
                   {firstWord}
                 </motion.p>
                 <motion.p
-                  key={`rest-${isMobile}`}
                   className="text-4xl md:text-6xl font-black text-gold transition-none"
-                  initial={isMobile ? { opacity: 0, y: 28 } : false}
-                  animate={isMobile ? { opacity: 1, y: 0 } : undefined}
-                  transition={isMobile ? { duration: 0.6, delay: 0.45 } : undefined}
-                  style={{
-                    transform: isMobile ? undefined : `translateX(${slideX}vw)`,
-                    textShadow: '0 2px 16px rgba(0,0,0,0.7)',
-                  }}
+                  style={{ transform: `translateX(${slideX}vw)`, textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
                 >
                   {restWords}
                 </motion.p>
