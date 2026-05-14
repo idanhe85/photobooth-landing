@@ -20,7 +20,15 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
+    const check = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      if (mobile) {
+        setScrollProgress(1)
+        setShowContent(true)
+        setFullyExpanded(true)
+      }
+    }
     check()
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
@@ -28,6 +36,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
+      if (isMobile) return
       if (fullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setFullyExpanded(false); e.preventDefault(); return
       }
@@ -40,9 +49,10 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
       }
     }
 
-    const onTouchStart = (e: TouchEvent) => setTouchStartY(e.touches[0].clientY)
+    const onTouchStart = (e: TouchEvent) => { if (isMobile) return; setTouchStartY(e.touches[0].clientY) }
 
     const onTouchMove = (e: TouchEvent) => {
+      if (isMobile) return
       if (!touchStartY) return
       const delta = touchStartY - e.touches[0].clientY
       if (fullyExpanded && delta < -20 && window.scrollY <= 5) {
@@ -59,7 +69,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
     }
 
     const onTouchEnd = () => setTouchStartY(0)
-    const onScroll   = () => { if (!fullyExpanded) window.scrollTo(0, 0) }
+    const onScroll   = () => { if (!fullyExpanded && !isMobile) window.scrollTo(0, 0) }
 
     window.addEventListener('wheel',      onWheel      as EventListener, { passive: false })
     window.addEventListener('scroll',     onScroll)
