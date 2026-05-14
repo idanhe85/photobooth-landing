@@ -87,7 +87,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
 
   const w          = 300 + scrollProgress * (isMobile ? 650 : 1250)
   const h          = 400 + scrollProgress * (isMobile ? 200 : 400)
-  const slideX     = scrollProgress * (isMobile ? 180 : 150)
+  const slideX     = isMobile ? 0 : scrollProgress * 150
   const firstWord  = title.split(' ')[0]
   const restWords  = title.split(' ').slice(1).join(' ')
 
@@ -166,7 +166,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
                 {/* Logo centred inside panel */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    animate={{ opacity: 1 - scrollProgress * 2 }}
+                    animate={{ opacity: isMobile ? 1 : 1 - scrollProgress * 2 }}
                     className="relative z-10"
                   >
                     <Image
@@ -185,13 +185,13 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
               <div className="flex items-center justify-center gap-4 w-full relative z-20 flex-col pointer-events-none">
                 <motion.p
                   className="text-4xl md:text-6xl font-black text-white/90 transition-none"
-                  style={{ transform: `translateX(-${slideX}vw)` }}
+                  style={{ transform: `translateX(-${slideX}vw)`, textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
                 >
                   {firstWord}
                 </motion.p>
                 <motion.p
                   className="text-4xl md:text-6xl font-black text-gold transition-none"
-                  style={{ transform: `translateX(${slideX}vw)` }}
+                  style={{ transform: `translateX(${slideX}vw)`, textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
                 >
                   {restWords}
                 </motion.p>
