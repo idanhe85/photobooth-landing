@@ -127,7 +127,7 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
           <div className="relative z-10 w-full flex flex-col items-center min-h-[100dvh]">
             <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative">
 
-              {/* Expanding panel — gold-to-navy gradient, no image/video */}
+              {/* Expanding panel — hero photo */}
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden transition-none"
                 style={{
@@ -135,28 +135,31 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
                   height: `${h}px`,
                   maxWidth: '95vw',
                   maxHeight: '85vh',
-                  boxShadow: '0 0 60px rgba(204,153,51,0.25)',
-                  background: 'linear-gradient(135deg, #000033 0%, #1a1000 50%, #3d2900 100%)',
+                  boxShadow: '0 0 60px rgba(204,153,51,0.35)',
                 }}
               >
+                {/* Hero photo */}
+                <Image
+                  src="/IMG_3989.jpg"
+                  alt="The PhotoDUDE booth in action"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
+                {/* Dark overlay — fades out as panel expands */}
+                <motion.div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(to bottom, rgba(0,0,51,0.45) 0%, rgba(0,0,0,0.2) 100%)' }}
+                  animate={{ opacity: 1 - scrollProgress * 0.7 }}
+                />
                 {/* Gold shimmer overlay that fades with expansion */}
                 <motion.div
                   className="absolute inset-0"
                   style={{
                     background:
-                      'radial-gradient(ellipse at center, rgba(204,153,51,0.15) 0%, transparent 70%)',
+                      'radial-gradient(ellipse at center, rgba(204,153,51,0.1) 0%, transparent 70%)',
                   }}
-                  animate={{ opacity: 1 - scrollProgress * 0.6 }}
-                />
-                {/* Inner sparkles on the panel */}
-                <SparklesCore
-                  particleColor="#CC9933"
-                  particleDensity={30}
-                  speed={0.4}
-                  minSize={0.3}
-                  maxSize={1.0}
-                  background="transparent"
-                  className="absolute inset-0 w-full h-full"
+                  animate={{ opacity: 1 - scrollProgress * 0.8 }}
                 />
                 {/* Logo centred inside panel */}
                 <div className="absolute inset-0 flex items-center justify-center">
