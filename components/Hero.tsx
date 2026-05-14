@@ -183,43 +183,32 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
 
               {/* Split title — words slide apart on scroll */}
               <div className="flex items-center justify-center gap-4 w-full relative z-20 flex-col pointer-events-none">
-                {isMobile ? (
-                  <>
-                    <motion.p
-                      className="text-4xl font-black text-white/90"
-                      initial={{ opacity: 0, y: 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                      style={{ textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
-                    >
-                      {firstWord}
-                    </motion.p>
-                    <motion.p
-                      className="text-4xl font-black text-gold"
-                      initial={{ opacity: 0, y: 24 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.45 }}
-                      style={{ textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
-                    >
-                      {restWords}
-                    </motion.p>
-                  </>
-                ) : (
-                  <>
-                    <motion.p
-                      className="text-4xl md:text-6xl font-black text-white/90 transition-none"
-                      style={{ transform: `translateX(-${slideX}vw)`, textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
-                    >
-                      {firstWord}
-                    </motion.p>
-                    <motion.p
-                      className="text-4xl md:text-6xl font-black text-gold transition-none"
-                      style={{ transform: `translateX(${slideX}vw)`, textShadow: '0 2px 16px rgba(0,0,0,0.7)' }}
-                    >
-                      {restWords}
-                    </motion.p>
-                  </>
-                )}
+                <motion.p
+                  key={`first-${isMobile}`}
+                  className="text-4xl md:text-6xl font-black text-white/90 transition-none"
+                  initial={isMobile ? { opacity: 0, y: 28 } : false}
+                  animate={isMobile ? { opacity: 1, y: 0 } : undefined}
+                  transition={isMobile ? { duration: 0.6, delay: 0.2 } : undefined}
+                  style={{
+                    transform: isMobile ? undefined : `translateX(-${slideX}vw)`,
+                    textShadow: '0 2px 16px rgba(0,0,0,0.7)',
+                  }}
+                >
+                  {firstWord}
+                </motion.p>
+                <motion.p
+                  key={`rest-${isMobile}`}
+                  className="text-4xl md:text-6xl font-black text-gold transition-none"
+                  initial={isMobile ? { opacity: 0, y: 28 } : false}
+                  animate={isMobile ? { opacity: 1, y: 0 } : undefined}
+                  transition={isMobile ? { duration: 0.6, delay: 0.45 } : undefined}
+                  style={{
+                    transform: isMobile ? undefined : `translateX(${slideX}vw)`,
+                    textShadow: '0 2px 16px rgba(0,0,0,0.7)',
+                  }}
+                >
+                  {restWords}
+                </motion.p>
               </div>
 
               {/* Scroll hint */}
