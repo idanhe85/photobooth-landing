@@ -235,8 +235,10 @@ export default function PolaroidGallery() {
             .film-reel-track {
               animation: film-reel 28s linear infinite;
             }
-            .film-reel-track:hover {
-              animation-play-state: paused;
+            @media (hover: hover) {
+              .film-reel-track:hover {
+                animation-play-state: paused;
+              }
             }
           `}</style>
 
