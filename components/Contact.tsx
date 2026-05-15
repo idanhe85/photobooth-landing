@@ -50,17 +50,9 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', event: '', message: '' })
   const [sent, setSent] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Send lead to CRM
-    try {
-      await fetch('https://photobooth-crm-f616.vercel.app/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, source: 'landing_page' }),
-      })
-    } catch { /* silent fail — WhatsApp still opens */ }
-    // Open WhatsApp
+    // Open WhatsApp immediately (must be synchronous — user gesture)
     const text = encodeURIComponent(
       `Hoi! Ik heb interesse in een photobooth.\n\n` +
       `Naam: ${form.name}\n` +
@@ -71,6 +63,12 @@ export default function Contact() {
     )
     window.open(`https://wa.me/31621360019?text=${text}`, '_blank')
     setSent(true)
+    // Send lead to CRM in background (fire and forget)
+    fetch('https://photobooth-crm-f616.vercel.app/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...form, source: 'landing_page' }),
+    }).catch(() => { /* silent fail */ })
   }
 
   return (
