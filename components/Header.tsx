@@ -15,6 +15,14 @@ export default function Header() {
   const [scrolled, setScrolled]   = useState(false)
   const [active, setActive]       = useState('home')
   const [menuOpen, setMenuOpen]   = useState(false)
+  const [isMobile, setIsMobile]   = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -50,20 +58,22 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo with Sparkles */}
         <a href="#home" className="relative flex items-center group">
-          <div
-            className="absolute pointer-events-none"
-            style={{ inset: '-18px -12px', zIndex: 0 }}
-          >
-            <SparklesCore
-              particleColor="#CC9933"
-              particleDensity={45}
-              speed={0.7}
-              minSize={0.5}
-              maxSize={1.4}
-              background="transparent"
-              className="w-full h-full"
-            />
-          </div>
+          {!isMobile && (
+            <div
+              className="absolute pointer-events-none"
+              style={{ inset: '-18px -12px', zIndex: 0 }}
+            >
+              <SparklesCore
+                particleColor="#CC9933"
+                particleDensity={45}
+                speed={0.7}
+                minSize={0.5}
+                maxSize={1.4}
+                background="transparent"
+                className="w-full h-full"
+              />
+            </div>
+          )}
           <div className="relative z-10">
             <Image
               src="/LOGO.png"

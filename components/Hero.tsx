@@ -95,15 +95,17 @@ function ScrollExpandHero({ title, children }: ScrollExpandHeroProps) {
             transition={{ duration: 0.1 }}
           >
             <div className="w-full h-full bg-navy" />
-            <SparklesCore
-              particleColor="#CC9933"
-              particleDensity={50}
-              speed={0.5}
-              minSize={0.4}
-              maxSize={1.6}
-              background="transparent"
-              className="absolute inset-0 w-full h-full"
-            />
+            {!isMobile && (
+              <SparklesCore
+                particleColor="#CC9933"
+                particleDensity={50}
+                speed={0.5}
+                minSize={0.4}
+                maxSize={1.6}
+                background="transparent"
+                className="absolute inset-0 w-full h-full"
+              />
+            )}
             {/* subtle grid */}
             <div
               className="absolute inset-0 opacity-[0.04]"
