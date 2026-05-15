@@ -50,8 +50,17 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', event: '', message: '' })
   const [sent, setSent] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    // Send lead to CRM
+    try {
+      await fetch('https://photobooth-crm-f616.vercel.app/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, source: 'landing_page' }),
+      })
+    } catch { /* silent fail — WhatsApp still opens */ }
+    // Open WhatsApp
     const text = encodeURIComponent(
       `Hoi! Ik heb interesse in een photobooth.\n\n` +
       `Naam: ${form.name}\n` +
