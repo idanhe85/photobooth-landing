@@ -52,6 +52,15 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    const text = encodeURIComponent(
+      `Hoi! Ik heb interesse in een photobooth.\n\n` +
+      `Naam: ${form.name}\n` +
+      `Telefoon: ${form.phone}\n` +
+      `Email: ${form.email || '—'}\n` +
+      `Type event: ${form.event || '—'}\n` +
+      `Bericht: ${form.message || '—'}`
+    )
+    window.open(`https://wa.me/31621360019?text=${text}`, '_blank')
     setSent(true)
   }
 
