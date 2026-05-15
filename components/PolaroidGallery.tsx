@@ -55,14 +55,9 @@ export default function PolaroidGallery() {
               from { transform: translateX(0); }
               to   { transform: translateX(-50%); }
             }
-            @keyframes reel-right {
-              from { transform: translateX(-50%); }
-              to   { transform: translateX(0); }
-            }
             .reel-left  { animation: reel-left  32s linear infinite; }
-            .reel-right { animation: reel-right 32s linear infinite; }
             @media (hover: hover) {
-              .reel-left:hover, .reel-right:hover { animation-play-state: paused; }
+              .reel-left:hover { animation-play-state: paused; }
             }
           `}</style>
 
@@ -77,22 +72,6 @@ export default function PolaroidGallery() {
             {[...galleryImages, ...galleryImages].map((img, i) => (
               <div key={`a-${i}`} className="flex-shrink-0"
                 style={{ transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)`, marginTop: i % 2 === 0 ? 0 : 20 }}>
-                <NextImage
-                  src={img.src} alt={img.alt}
-                  width={140} height={420} quality={85}
-                  draggable={false}
-                  className="block shadow-xl rounded-sm"
-                  style={{ width: 140, height: 420, objectFit: 'cover' }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Row 2 — scrolls right (desktop only) */}
-          <div className="hidden lg:flex reel-right gap-4 pt-4 pb-2" style={{ width: 'max-content' }}>
-            {[...[...galleryImages].reverse(), ...[...galleryImages].reverse()].map((img, i) => (
-              <div key={`b-${i}`} className="flex-shrink-0"
-                style={{ transform: `rotate(${i % 2 === 0 ? 1.5 : -1.5}deg)`, marginTop: i % 2 === 0 ? 20 : 0 }}>
                 <NextImage
                   src={img.src} alt={img.alt}
                   width={140} height={420} quality={85}
