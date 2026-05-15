@@ -4,7 +4,7 @@ import React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-interface HeroCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
+interface HeroCarouselProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title: React.ReactNode
   subtitle: string
   images: { src: string; alt: string }[]
