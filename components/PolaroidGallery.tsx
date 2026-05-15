@@ -2,6 +2,7 @@
 import * as React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { RefreshCw } from "lucide-react";
+import NextImage from "next/image";
 
 interface ImageData {
   src: string;
@@ -133,15 +134,14 @@ const PolaroidStack = React.forwardRef<{ reshuffle: () => void }, ImageStackProp
                 custom={{ position, zIndex: images.length - index, springConfig }}
                 style={{ left: "50%", top: "60%", marginLeft: "-80px", marginTop: "-240px", width: 160 }}
               >
-                <img
+                <NextImage
                   src={image.src}
                   alt={image.alt}
+                  width={160}
+                  height={480}
+                  quality={90}
                   className="block shadow-2xl"
                   draggable={false}
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='480'%3E%3Crect width='100%25' height='100%25' fill='%23000033'/%3E%3C/svg%3E";
-                  }}
                 />
               </motion.div>
             );
@@ -154,15 +154,15 @@ const PolaroidStack = React.forwardRef<{ reshuffle: () => void }, ImageStackProp
 PolaroidStack.displayName = "PolaroidStack";
 
 const galleryImages: ImageData[] = [
-  { id: "1", src: "/gallery/Photo1.png", alt: "Wedding Day" },
-  { id: "2", src: "/gallery/Photo2.png", alt: "Sweet Sixteen" },
-  { id: "3", src: "/gallery/Photo3.png", alt: "Holiday Party" },
-  { id: "4", src: "/gallery/Photo4.png", alt: "Gerard's 65th" },
-  { id: "5", src: "/gallery/Photo5.png", alt: "80s & 90s Party" },
-  { id: "6", src: "/gallery/Photo6.png", alt: "Golden Years" },
-  { id: "7", src: "/gallery/Photo7.png", alt: "Corporate Event" },
-  { id: "8", src: "/gallery/Photo8.png", alt: "Wedding Vibes" },
-  { id: "9", src: "/gallery/Photo9.png", alt: "Sweet 16" },
+  { id: "1", src: "/gallery/Photo1.jpg", alt: "Wedding Day" },
+  { id: "2", src: "/gallery/Photo2.jpg", alt: "Sweet Sixteen" },
+  { id: "3", src: "/gallery/Photo3.jpg", alt: "Holiday Party" },
+  { id: "4", src: "/gallery/Photo4.jpg", alt: "Gerard's 65th" },
+  { id: "5", src: "/gallery/Photo5.jpg", alt: "80s & 90s Party" },
+  { id: "6", src: "/gallery/Photo6.jpg", alt: "Golden Years" },
+  { id: "7", src: "/gallery/Photo7.jpg", alt: "Corporate Event" },
+  { id: "8", src: "/gallery/Photo8.jpg", alt: "Wedding Vibes" },
+  { id: "9", src: "/gallery/Photo9.jpg", alt: "Sweet 16" },
 ];
 
 const stacks = [
@@ -259,16 +259,15 @@ export default function PolaroidGallery() {
                   marginTop: i % 2 === 0 ? 0 : 24,
                 }}
               >
-                <img
+                <NextImage
                   src={img.src}
                   alt={img.alt}
+                  width={110}
+                  height={330}
+                  quality={85}
                   draggable={false}
                   className="block shadow-xl rounded-sm"
                   style={{ width: 110, height: 330, objectFit: 'cover' }}
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='330'%3E%3Crect width='100%25' height='100%25' fill='%23000033'/%3E%3C/svg%3E";
-                  }}
                 />
               </div>
             ))}
